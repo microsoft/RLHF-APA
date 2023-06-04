@@ -9,7 +9,9 @@ In addition to empirical results, we also provide a theoretical justification su
 
 
 ### Getting Started
-Python3 is required for the current codebase. Install the dependencies as follows.
+Python 3 is required for the current codebase. It's recommended to use Python 3.9 for installing the dependencies. Due to the current [Ray support issue](https://github.com/ray-project/ray/issues/33232), Python 3.11 may give error during executation.
+
+Install the dependencies as follows.
 
 ```shell 
 pip install -r requirements.txt 
@@ -37,7 +39,7 @@ accelerate launch  --config_file configs/accelerate/zero2-bf16.yaml examples/hh/
 accelerate launch  --config_file configs/accelerate/zero2-bf16.yaml examples/hh/sppo_off_hh.py  
 ```
 
-Inside each of the code file, one may adjust the random seed, model size and algorithm. Note that this code is not optimized with memory usage, only for a preliminary illustration of the differences between the existing policy iteration algorithms for RLHF. 
+Inside each of the code file, one may adjust the random seed, model size and algorithm. Note that this code is not optimized with memory usage, only for a preliminary illustration of the differences between the existing policy iteration algorithms for RLHF. The code is tested on 4 V100 and 8 V100 for 125M and 1B models, and 4 MI200 for 6B models. We put reference model, reward model and value model in three difference GPUs. For smaller number of GPUs, you may need to change the device number in accelerate_sppo_trainer.py (and other corresponding accelerator files). 
 
 
 ### Acknowledgement
