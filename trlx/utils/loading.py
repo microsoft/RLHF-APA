@@ -10,11 +10,6 @@ from trlx.trainer.accelerate_ilql_trainer import AccelerateILQLTrainer
 from trlx.trainer.accelerate_ppo_trainer import AcceleratePPOTrainer
 from trlx.trainer.accelerate_sppo_trainer import AccelerateSPPOTrainer
 from trlx.trainer.accelerate_sft_trainer import AccelerateSFTTrainer
-from trlx.trainer.accelerate_sql_trainer import AccelerateSQLTrainer
-from trlx.trainer.accelerate_ssql_trainer import AccelerateSSQLTrainer
-from trlx.trainer.accelerate_sql_on_trainer import AccelerateSQLONTrainer
-from trlx.trainer.accelerate_sql_don_trainer import AccelerateSQLDONTrainer
-from trlx.trainer.accelerate_ssql_on_trainer import AccelerateSSQLONTrainer
 from trlx.trainer.accelerate_sqloff_trainer import AccelerateSQLOffTrainer
 # try:
 #     from trlx.trainer.nemo_ilql_trainer import NeMoILQLTrainer

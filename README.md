@@ -1,5 +1,5 @@
 # Fine-tuning language models with Advantage-Induced Policy Alignment
-This repo contains the official implementation of paper "Fine-tuning language models with Advantage-Induced Policy Alignment", by Banghua Zhu, Mingyu Ding, Philip Jacobson, Ming Wu, Wei Zhan, Michael Jordan, Jiantao Jiao.
+This repo contains the official implementation of paper "Fine-tuning language models with Advantage-Induced Policy Alignment", by Banghua Zhu, Hiteshi Sharma, Felipe Vieira Frujeri, Shi Dong, Chenguang Zhu, Michael I. Jordan, Jiantao Jiao.
 
 
 ### Abstract
@@ -18,12 +18,23 @@ pip install -e .
 
 To reproduce the experiments in the paper, execute the following set of code:
 ```shell 
-accelerate launch  --config_file configs/accelerate/zero2-bf16.yaml examples/hh/sppo_hh.py ## For running APA or AWR on HH dataset
-accelerate launch  --config_file configs/accelerate/zero2-bf16.yaml examples/hh/ppo_hh.py ## For running PPO on HH dataset
-accelerate launch  --config_file configs/accelerate/zero2-bf16.yaml examples/hh/sppo_tldr.py ## For running APA or AWR on TLDR dataset
-accelerate launch  --config_file configs/accelerate/zero2-bf16.yaml examples/hh/ppo_tldr.py ## For running PPO on TLDR dataset
-accelerate launch  --config_file configs/accelerate/zero2-bf16.yaml examples/hh/ilql_hh.py ## For running ILQL on HH dataset
-accelerate launch  --config_file configs/accelerate/zero2-bf16.yaml examples/hh/sppo_off_hh.py ## For running offline APA or AWR on HH dataset
+## For running APA or AWR on HH dataset
+accelerate launch  --config_file configs/accelerate/zero2-bf16.yaml examples/hh/sppo_hh.py 
+
+## For running PPO on HH dataset
+accelerate launch  --config_file configs/accelerate/zero2-bf16.yaml examples/hh/ppo_hh.py 
+
+## For running APA or AWR on TLDR dataset
+accelerate launch  --config_file configs/accelerate/zero2-bf16.yaml examples/hh/sppo_tldr.py 
+
+## For running PPO on TLDR dataset
+accelerate launch  --config_file configs/accelerate/zero2-bf16.yaml examples/hh/ppo_tldr.py 
+
+## For running offline ILQL on HH dataset
+accelerate launch  --config_file configs/accelerate/zero2-bf16.yaml examples/hh/ilql_hh.py 
+
+## For running offline APA or AWR on HH dataset
+accelerate launch  --config_file configs/accelerate/zero2-bf16.yaml examples/hh/sppo_off_hh.py  
 ```
 
 Inside each of the code file, one may adjust the random seed, model size and algorithm. Note that this code is not optimized with memory usage, only for a preliminary illustration of the differences between the existing policy iteration algorithms for RLHF. 

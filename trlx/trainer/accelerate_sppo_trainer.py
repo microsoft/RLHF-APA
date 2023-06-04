@@ -470,7 +470,7 @@ class AccelerateSPPOTrainer(AccelerateRLTrainer):
                 if len(kl_penalty[sample_idx]) == 0 or len(all_logprobs[sample_idx]) == 0:
                     continue
 
-                rewards = kl_penalty[sample_idx] *0
+                rewards = kl_penalty[sample_idx] * 0
                 rewards[-1] += scores[sample_idx].cpu()
 
                 ppo_rl_elements.append(

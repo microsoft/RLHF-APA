@@ -211,40 +211,18 @@ class SPPOConfig(MethodConfig):
             1.0 - self.cliprange,
             1.0 + self.cliprange,
         )
-        # zero_padding =  torch.zeros(logsumexp.shape[0], 1, device=f"cuda:{logsumexp.get_device()}") 
-        # next_values = torch.cat((values[:,1:] * mask[:, 1:], zero_padding), dim = 1) 
-        # next_logsumexp = torch.cat((logsumexp[:,1:] * mask[:, 1:], zero_padding), dim = 1) 
-        # advantages = torch.clamp(torch.clamp(advantages,max=-0.9*logprobs), min=-1)
-        target = self.adv_coeff_sq*advantages + old_logprobs.detach()
-        target[target < -3] = torch.exp(target[target < -3] + 3) - 4 
+
         log_ratio_star = torch.clamp((logprobs - self.adv_coeff_sq*advantages - old_logprobs.detach())* mask, -1, 1)
         pg_loss = torch.sum(torch.max(pg_loss1, pg_loss2) * mask) / n
         pg_clipfrac = torch.sum((pg_loss2 > pg_loss1).float() * mask) / n
         sq_loss = torch.sum(((logprobs - self.adv_coeff_sq*advantages - old_logprobs.detach()) * mask) ** 2)  / n
-        sq_q_loss = torch.sum(((logprobs + logsumexp - returns - logprobs.detach() - logsumexp.detach()) * mask) ** 2)  / n
-        approx_kl_loss = torch.sum(((logprobs - target) * mask))  / n # torch.sum(torch.exp(log_ratio_star) - 1 - log_ratio_star)  / n
-        # print("advantages",advantages)
+
         awac_loss = torch.sum(-logprobs*torch.exp(self.adv_coeff_log*advantages)* mask) / n
         if self.loss_str == "square":
             loss = sq_loss + self.vf_coef * vf_loss
         elif self.loss_str == "log":
             loss = awac_loss +  self.vf_coef * vf_loss 
-        elif self.loss_str == "Q":
-            loss = sq_q_loss +  self.vf_coef * vf_loss
-        elif self.loss_str == "approx":
-            loss = approx_kl_loss +  self.vf_coef * vf_loss
 
-            
-        # loss =  awac_loss +  self.vf_coef * vf_loss #             
-        # loss = sq_loss + self.vf_coef * vf_loss # pg_loss + self.vf_coef * vf_loss 
-       
-        if approx_kl > 1000:
-            print("logprobs", logprobs, logprobs.shape)
-            print("log_ratio", log_ratio, log_ratio.shape)
-            print("advantages", advantages, advantages.shape)
-            print("old_logprobs", old_logprobs, old_logprobs.shape)
-            print("returns", returns, returns.shape)
-            # loss = loss * 0
         stats = dict(
             losses=dict(
                 total_loss=loss.item(),
