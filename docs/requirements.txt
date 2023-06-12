@@ -7,5 +7,5 @@ sphinx==4.0.0
 sphinx_rtd_theme
 torchtyping
 tqdm==4.64.0
-transformers==4.21.2
+transformers==4.30.0
 wandb==0.13.2
