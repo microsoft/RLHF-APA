@@ -21,13 +21,13 @@ pip install -e .
 To reproduce the experiments in the paper, execute the following set of code:
 ```shell 
 ## For running APA or AWR on HH dataset
-accelerate launch  --config_file configs/accelerate/zero2-bf16.yaml examples/hh/sppo_hh.py 
+accelerate launch  --config_file configs/accelerate/zero2-bf16.yaml examples/hh/apa_hh.py 
 
 ## For running PPO on HH dataset
 accelerate launch  --config_file configs/accelerate/zero2-bf16.yaml examples/hh/ppo_hh.py 
 
 ## For running APA or AWR on TLDR dataset
-accelerate launch  --config_file configs/accelerate/zero2-bf16.yaml examples/hh/sppo_tldr.py 
+accelerate launch  --config_file configs/accelerate/zero2-bf16.yaml examples/hh/apa_tldr.py 
 
 ## For running PPO on TLDR dataset
 accelerate launch  --config_file configs/accelerate/zero2-bf16.yaml examples/hh/ppo_tldr.py 
@@ -36,7 +36,7 @@ accelerate launch  --config_file configs/accelerate/zero2-bf16.yaml examples/hh/
 accelerate launch  --config_file configs/accelerate/zero2-bf16.yaml examples/hh/ilql_hh.py 
 
 ## For running offline APA or AWR on HH dataset
-accelerate launch  --config_file configs/accelerate/zero2-bf16.yaml examples/hh/sppo_off_hh.py  
+accelerate launch  --config_file configs/accelerate/zero2-bf16.yaml examples/hh/apa_off_hh.py  
 ```
 
 Inside each of the code file, one may adjust the random seed, model size and algorithm. Note that this code is not optimized with memory usage, only for a preliminary illustration of the differences between the existing policy iteration algorithms for RLHF. The code is tested on 4 V100 and 8 V100 for 125M and 1B models, and 4 MI200 for 6B models. We put reference model, reward model and value model in three difference GPUs. For smaller number of GPUs, you may need to change the device number in accelerate_sppo_trainer.py (and other corresponding accelerator files). 
